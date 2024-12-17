@@ -164,7 +164,7 @@ class StudentController extends Controller
             $pdf = Pdf::loadView('admin.student.certificate', compact('student', 'totalPoints'));
 
             // Simpan atau download sertifikat sebagai PDF
-            return $pdf->download('sertifikat-' . $student->name . '.pdf');
+            return $pdf->stream('sertifikat-' . $student->name . '.pdf');
         } else {
             return redirect()->back()->with('error', 'Mahasiswa belum mencapai 30 poin.');
         }
