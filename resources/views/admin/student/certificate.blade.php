@@ -59,7 +59,7 @@
             Sebagai bentuk apresiasi atas pencapaian <span class="bold">30 poin</span> <br>
             sesuai yang telah ditetapkan.
         </p>
-        <p>Diselenggarakan pada {{ now()->format('d F Y') }}</p>
+        <p>Diselenggarakan pada {{ now()->isoFormat('dddd, D MMMM Y') }}</p>
     </div>
 </body>
 
