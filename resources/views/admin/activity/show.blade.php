@@ -85,31 +85,46 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><strong>Deskripsi Kegiatan</strong></td>
+                            <td>
+                                {{ $activity->description }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Foto Kegiatan</strong></td>
+                            <td>
+                                <a href="{{ asset('storage/upload/kegiatan/' . $activity->photo) }}" target="blank"
+                                    class="btn btn-dark btn-sm">
+                                    <i class="bx bxs-file-pdf">
+                                        Lihat Foto
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sertifikat</strong></td>
+                            <td>
+                                <a href="{{ asset('storage/upload/sertifikat/' . $activity->file) }}" target="pdf-frame"
+                                    class="btn btn-dark btn-sm">
+                                    <i class="bx bxs-file-pdf">
+                                        Lihat File
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><strong>Status</strong></td>
                             <td>
                                 @if ($activity->status == 0)
-                                    <span class="badge bg-success">Belum Diverifikasi</span>
+                                    <span class="badge bg-warning">Belum Diverifikasi</span>
                                 @elseif ($activity->status == 1)
-                                    <span class="badge bg-warning">Diterima</span>
+                                    <span class="badge bg-success">Diterima</span>
                                 @else
                                     <span class="badge bg-danger">Ditolak</span>
                                 @endif
                             </td>
                         </tr>
-                        <tr>
-                            <td><strong>File</strong></td>
-                            <td>
-                                @foreach ($data as $key => $value)
-                                    <a href="{{ asset('storage/upload/file/' . $value) }}" target="pdf-frame"
-                                        class="btn btn-dark btn-sm">
-                                        <i class="bx bxs-file-pdf">
-                                            Lihat File
-                                        </i>
-                                    </a>
-                                @endforeach
 
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

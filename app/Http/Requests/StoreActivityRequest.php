@@ -38,8 +38,9 @@ class StoreActivityRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'place' => ['required', 'string', 'max:255'],
             'date' => ['required', 'date'],
-            'file' => ['required'],
-            'file.*' =>  ['required', 'mimes:pdf', 'max:5000'],
+            'photo' => ['required', 'mimes:jpg,jpeg,png', 'max:5000'],
+            'file' => ['required', 'mimes:pdf', 'max:5000'],
+            'description' => ['required'],
             'status' => ['in:0'],
         ];
     }
@@ -62,8 +63,13 @@ class StoreActivityRequest extends FormRequest
             'place.max' => 'Tempat Kegiatan maksimal 255 kata',
             'date.required' => 'Tanggal Kegiatan wajib diisi',
             'date.date' => 'Tanggal Kegiatan tidak sesuai format',
-            'file.required' => 'Bukti Kegiatan wajib upload',
-            'file.max' => 'Bukti Kegiatan maksimal 5 MB',
+            'photo.required' => 'Foto Kegiatan wajib upload',
+            'photo.mimes' => 'Foto Kegiatan tidak sesuai format',
+            'photo.max' => 'Foto Kegiatan maksimal 5 MB',
+            'file.required' => 'Sertifikat wajib upload',
+            'file.mimes' => 'Sertifikat tidak sesuai format',
+            'file.max' => 'Sertifikat maksimal 5 MB',
+            'description.required' => 'Deskripsi Kegiatan wajib diisi',
         ];
     }
 }

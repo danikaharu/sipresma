@@ -121,12 +121,38 @@
         @enderror
     </div>
 
-    <div class="col-md-12 mb-6">
-        <label class="form-label" for="basic-default-fullname">Bukti Kegiatan</label>
-        <input type="file" name="file[]" class="form-control @error('file')
+    <div class="col-md-6 mb-6">
+        <label class="form-label" for="basic-default-fullname">Foto Kegiatan</label>
+        <input type="file" name="photo" class="form-control @error('photo')
       invalid
-  @enderror" multiple>
+  @enderror">
+        @error('photo')
+            <div class="small text-danger">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="col-md-6 mb-6">
+        <label class="form-label" for="basic-default-fullname">Upload Sertifikat</label>
+        <input type="file" name="file" class="form-control @error('file')
+      invalid
+  @enderror">
         @error('file')
+            <div class="small text-danger">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="col-md-12 mb-6">
+        <label class="form-label" for="basic-default-fullname">Deskripsi Kegiatan</label>
+        <textarea name="description" class="form-control @error('description')
+        invalid
+    @enderror">
+            {{ isset($activity) ? $activity->description : old('description') }}
+        </textarea>
+        @error('description')
             <div class="small text-danger">
                 {{ $message }}
             </div>

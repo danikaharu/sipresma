@@ -64,18 +64,22 @@ class ActivityController extends Controller
         try {
             $attr = $request->validated();
 
-            $uploadedFiles = [];
-            if ($request->hasFile('file')) {
-                foreach ($request->file('file') as $file) {
-                    if ($file->isValid()) {
-                        $filename = $file->hashName();
-                        $file->storeAs('upload/file/', $filename, 'public');
-                        $uploadedFiles[] = $filename;
-                    }
-                }
+            if ($request->file('photo') && $request->file('photo')->isValid()) {
+
+                $filename = $request->file('photo')->hashName();
+                $request->file('photo')->storeAs('upload/kegiatan', $filename, 'public');
+
+                $attr['photo'] = $filename;
             }
 
-            $attr['file'] = json_encode($uploadedFiles);
+            if ($request->file('file') && $request->file('file')->isValid()) {
+
+                $filename = $request->file('file')->hashName();
+                $request->file('file')->storeAs('upload/sertifikat', $filename, 'public');
+
+                $attr['file'] = $filename;
+            }
+
 
             Activity::create($attr);
 
@@ -90,16 +94,7 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        $data = json_decode($activity['file'], true);
-
-        // Proses array menjadi string (contoh untuk warna)
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = implode(', ', $value);
-            }
-        }
-
-        return view('admin.activity.show', compact('activity', 'data'));
+        return view('admin.activity.show', compact('activity'));
     }
 
     /**
@@ -120,40 +115,32 @@ class ActivityController extends Controller
         try {
             $attr = $request->validated();
 
-            if ($request->hasFile('file') && is_array($request->file('file'))) {
-                $path = storage_path('app/public/upload/file/');
+            if ($request->file('photo') && $request->file('photo')->isValid()) {
 
-                // Inisialisasi array untuk menyimpan nama file gambar
-                $filenames = [];
+                $path = storage_path('app/public/upload/kegiatan/');
+                $filename = $request->file('photo')->hashName();
+                $request->file('photo')->storeAs('upload/kegiatan', $filename, 'public');
 
-                // Cek jika ada file yang diupload
-                foreach ($request->file('file') as $file) {
-                    if ($file->isValid()) { // Pastikan file valid
-                        $filename = $file->hashName();
-
-                        // Simpan file di folder yang sesuai
-                        if (!file_exists($path)) {
-                            mkdir($path, 0777, true); // Membuat direktori jika belum ada
-                        }
-
-                        $file->storeAs('upload/file/', $filename, 'public');
-                        $filenames[] = $filename; // Menambahkan nama file ke array
-                    }
+                // delete old file from storage
+                if ($activity->photo != null && file_exists($path . $activity->photo)) {
+                    unlink($path . $activity->photo);
                 }
 
-                // Hapus gambar lama jika ada
-                if ($activity->file != null) {
-                    $oldImages = json_decode($activity->file); // Mengambil nama gambar lama
-                    foreach ($oldImages as $image) {
-                        $oldImagePath = $path . $image;
-                        if (file_exists($oldImagePath)) {
-                            unlink($oldImagePath); // Menghapus file lama
-                        }
-                    }
+                $attr['photo'] = $filename;
+            }
+
+            if ($request->file('file') && $request->file('file')->isValid()) {
+
+                $path = storage_path('app/public/upload/sertifikat/');
+                $filename = $request->file('file')->hashName();
+                $request->file('file')->storeAs('upload/sertifikat', $filename, 'public');
+
+                // delete old file from storage
+                if ($activity->file != null && file_exists($path . $activity->file)) {
+                    unlink($path . $activity->file);
                 }
 
-                // Simpan nama file gambar dalam bentuk JSON di database
-                $attr['file'] = json_encode($filenames);
+                $attr['file'] = $filename;
             }
 
             $activity->update($attr);
@@ -175,15 +162,15 @@ class ActivityController extends Controller
     {
         try {
             if ($activity) {
-                $path = storage_path('app/public/upload/file/');
-                if ($activity->file != null) {
-                    $oldImages = json_decode($activity->file); // Mengambil nama gambar lama
-                    foreach ($oldImages as $image) {
-                        $oldImagePath = $path . $image;
-                        if (file_exists($oldImagePath)) {
-                            unlink($oldImagePath); // Menghapus file lama
-                        }
-                    }
+                $filePath = storage_path('app/public/upload/sertifikat/');
+                $photoPath = storage_path('app/public/upload/kegiatan/');
+
+                if ($activity->file != null && file_exists($filePath . $activity->file)) {
+                    unlink($filePath . $activity->file);
+                }
+
+                if ($activity->photo != null && file_exists($photoPath . $activity->photo)) {
+                    unlink($photoPath . $activity->photo);
                 }
 
                 $activity->delete();
