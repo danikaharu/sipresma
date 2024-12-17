@@ -95,7 +95,7 @@
                             <td>
                                 <a href="{{ asset('storage/upload/kegiatan/' . $activity->photo) }}" target="blank"
                                     class="btn btn-dark btn-sm">
-                                    <i class="bx bxs-file-pdf">
+                                    <i class="bx bx-photo-album">
                                         Lihat Foto
                                     </i>
                                 </a>
