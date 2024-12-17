@@ -163,15 +163,42 @@
 @push('script')
     <script>
         $(document).ready(function() {
-            $('#activity_category').on('change', function() {
-                let categoryId = $(this).val(); // Ambil ID kategori kegiatan
+            // Pre-select the activity type and award based on selected category
+            let selectedCategoryId = $('#activity_category').val();
+            let selectedAwardId = "{{ isset($activity) ? $activity->award_id : old('award_id') }}";
+            if (selectedCategoryId) {
+                // Load activity types and awards if a category is selected
+                $.ajax({
+                    url: '/admin/get-activity-details',
+                    method: 'GET',
+                    data: {
+                        category_id: selectedCategoryId
+                    },
+                    success: function(response) {
+                        // Populate activity types
+                        response.types.forEach(function(type) {
+                            $('#activity_type').append(
+                                `<option value="${type.id}" ${selectedCategoryId == type.id ? 'selected' : ''}>${type.name}</option>`
+                            );
+                        });
 
-                // Kosongkan dropdown jenis kegiatan
+                        // Populate awards
+                        response.awards.forEach(function(award) {
+                            $('#award').append(
+                                `<option value="${award.id}" ${selectedAwardId == award.id ? 'selected' : ''}>${award.name}</option>`
+                            );
+                        });
+                    }
+                });
+            }
+
+            // Handle category change and update dependent fields
+            $('#activity_category').on('change', function() {
+                let categoryId = $(this).val();
                 $('#award').empty().append('<option value="">Pilih Prestasi</option>');
                 $('#activity_type').empty().append('<option value="">Pilih Jenis Kegiatan</option>');
 
                 if (categoryId) {
-                    // Ambil data jenis kegiatan berdasarkan kategori
                     $.ajax({
                         url: '/admin/get-activity-details',
                         method: 'GET',
@@ -179,7 +206,6 @@
                             category_id: categoryId
                         },
                         success: function(response) {
-                            // Populate dropdown jenis kegiatan
                             response.types.forEach(function(type) {
                                 $('#activity_type').append(
                                     `<option value="${type.id}">${type.name}</option>`
