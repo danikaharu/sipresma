@@ -27,11 +27,13 @@
             <div class="card-header">
                 <h5>Data Penghargaan</h5>
 
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ route('admin.award.create') }}"><i class="bx bx-plus me-1"></i>Input
-                        Data
-                        Penghargaan</a>
-                </div>
+                @can('create award')
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{{ route('admin.award.create') }}"><i class="bx bx-plus me-1"></i>Input
+                            Data
+                            Penghargaan</a>
+                    </div>
+                @endcan
 
             </div>
             <div class="table-responsive text-nowrap">

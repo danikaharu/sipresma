@@ -7,10 +7,23 @@ use App\Models\ActivityType;
 use App\Http\Requests\StoreActivityTypeRequest;
 use App\Http\Requests\UpdateActivityTypeRequest;
 use App\Models\ActivityCategory;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class ActivityTypeController extends Controller
+class ActivityTypeController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('view activity type'), only: ['index']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('create activity type'), only: ['create', 'store']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('edit activity type'), only: ['edit', 'update']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('delete activity type'), only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

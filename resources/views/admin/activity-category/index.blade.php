@@ -27,11 +27,13 @@
             <div class="card-header">
                 <h5>Data Kategori Kegiatan</h5>
 
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ route('admin.activity-category.create') }}"><i
-                            class="bx bx-plus me-1"></i>Input Data
-                        Kategori Kegiatan</a>
-                </div>
+                @can('create activity category')
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{{ route('admin.activity-category.create') }}"><i
+                                class="bx bx-plus me-1"></i>Input Data
+                            Kategori Kegiatan</a>
+                    </div>
+                @endcan
 
             </div>
             <div class="table-responsive text-nowrap">

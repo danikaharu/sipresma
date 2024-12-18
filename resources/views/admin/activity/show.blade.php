@@ -16,13 +16,15 @@
                     Kembali</a>
             </li>
             @if ($activity->status == 0)
-                <li class="nav-item">
-                    <!-- Button to trigger modal -->
-                    <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal"
-                        data-bs-target="#validationModal">
-                        <i class="bx bx-check me-1"></i> Validasi
-                    </button>
-                </li>
+                @can('verify activity')
+                    <li class="nav-item">
+                        <!-- Button to trigger modal -->
+                        <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal"
+                            data-bs-target="#validationModal">
+                            <i class="bx bx-check me-1"></i> Validasi
+                        </button>
+                    </li>
+                @endcan
             @endif
         </ul>
 

@@ -27,11 +27,13 @@
             <div class="card-header">
                 <h5>Data Tingkat Kegiatan</h5>
 
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ route('admin.level.create') }}"><i class="bx bx-plus me-1"></i>Input
-                        Data
-                        Tingkat Kegiatan</a>
-                </div>
+                @can('create level')
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{{ route('admin.level.create') }}"><i class="bx bx-plus me-1"></i>Input
+                            Data
+                            Tingkat Kegiatan</a>
+                    </div>
+                @endcan
 
             </div>
             <div class="table-responsive text-nowrap">

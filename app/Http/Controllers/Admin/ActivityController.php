@@ -11,10 +11,27 @@ use App\Models\ActivityType;
 use App\Models\Award;
 use App\Models\Level;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class ActivityController extends Controller
+class ActivityController extends Controller implements HasMiddleware
 {
+
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('view activity'), only: ['index']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('create activity'), only: ['create', 'store']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('show activity'), only: ['show']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('edit activity'), only: ['edit', 'update']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('delete activity'), only: ['destroy']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('export activity'), only: ['export']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('verify activity'), only: ['updateStatus']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

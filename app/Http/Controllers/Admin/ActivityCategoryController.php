@@ -6,10 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\ActivityCategory;
 use App\Http\Requests\StoreActivityCategoryRequest;
 use App\Http\Requests\UpdateActivityCategoryRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class ActivityCategoryController extends Controller
+class ActivityCategoryController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('view activity category'), only: ['index']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('create activity category'), only: ['create', 'store']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('edit activity category'), only: ['edit', 'update']),
+            new Middleware(\Spatie\Permission\Middleware\PermissionMiddleware::using('delete activity category'), only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

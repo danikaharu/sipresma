@@ -27,11 +27,13 @@
             <div class="card-header">
                 <h5>Data Mahasiswa</h5>
 
-                <div class="btn-group">
-                    <a class="btn btn-primary" href="{{ route('admin.student.create') }}"><i
-                            class="bx bx-plus me-1"></i>Input Data
-                        Mahasiswa</a>
-                </div>
+                @can('create student')
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{{ route('admin.student.create') }}"><i
+                                class="bx bx-plus me-1"></i>Input Data
+                            Mahasiswa</a>
+                    </div>
+                @endcan
 
             </div>
             <div class="table-responsive text-nowrap">

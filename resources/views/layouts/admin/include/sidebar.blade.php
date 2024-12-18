@@ -67,73 +67,93 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is('admin/activity', 'admin/activity/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.activity.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-category"></i>
-                <div class="text-truncate">Kegiatan</div>
-            </a>
-        </li>
+        @can('view activity')
+            <li class="menu-item {{ request()->is('admin/activity', 'admin/activity/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.activity.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-category"></i>
+                    <div class="text-truncate">Kegiatan</div>
+                </a>
+            </li>
+        @endcan
 
-        <li class="menu-item {{ request()->is('admin/summary-point') ? ' active' : '' }}">
-            <a href="{{ route('admin.summary.point') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-award"></i>
-                <div class="text-truncate">Rekap Poin</div>
-            </a>
-        </li>
+        @can('summary point')
+            <li class="menu-item {{ request()->is('admin/summary-point') ? ' active' : '' }}">
+                <a href="{{ route('admin.summary.point') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-award"></i>
+                    <div class="text-truncate">Rekap Poin</div>
+                </a>
+            </li>
+        @endcan
 
         <!-- Master Data -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
 
-        <li class="menu-item {{ request()->is('admin/student', 'admin/student/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.student.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-user-pin"></i>
-                <div class="text-truncate">Mahasiswa</div>
-            </a>
-        </li>
+        @can('view student')
+            <li class="menu-item {{ request()->is('admin/student', 'admin/student/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.student.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-user-pin"></i>
+                    <div class="text-truncate">Mahasiswa</div>
+                </a>
+            </li>
+        @endcan
 
-        <li class="menu-item {{ request()->is('admin/level', 'admin/level/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.level.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-category"></i>
-                <div class="text-truncate">Tingkat Kegiatan</div>
-            </a>
-        </li>
-        <li
-            class="menu-item {{ request()->is('admin/activity-category', 'admin/activity-category/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.activity-category.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-category"></i>
-                <div class="text-truncate">Kategori Kegiatan</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->is('admin/activity-type', 'admin/activity-type/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.activity-type.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-category"></i>
-                <div class="text-truncate">Jenis Kegiatan</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->is('admin/award', 'admin/award/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.award.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-award"></i>
-                <div class="text-truncate">Prestasi</div>
-            </a>
-        </li>
+        @can('view level')
+            <li class="menu-item {{ request()->is('admin/level', 'admin/level/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.level.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-category"></i>
+                    <div class="text-truncate">Tingkat Kegiatan</div>
+                </a>
+            </li>
+        @endcan
+
+        @can('view activity category')
+            <li
+                class="menu-item {{ request()->is('admin/activity-category', 'admin/activity-category/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.activity-category.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-category"></i>
+                    <div class="text-truncate">Kategori Kegiatan</div>
+                </a>
+            </li>
+        @endcan
+
+        @can('view activity type')
+            <li class="menu-item {{ request()->is('admin/activity-type', 'admin/activity-type/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.activity-type.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-category"></i>
+                    <div class="text-truncate">Jenis Kegiatan</div>
+                </a>
+            </li>
+        @endcan
+
+        @can('view award')
+            <li class="menu-item {{ request()->is('admin/award', 'admin/award/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.award.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-award"></i>
+                    <div class="text-truncate">Prestasi</div>
+                </a>
+            </li>
+        @endcan
 
         <!-- Pengaturan Pengguna -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan Pengguna</span></li>
 
-        </li>
-        <li class="menu-item {{ request()->is('admin/user', 'admin/user/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.user.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Basic">Pengguna</div>
-            </a>
-        </li>
+        @can('view user')
+            <li class="menu-item {{ request()->is('admin/user', 'admin/user/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.user.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="Basic">Pengguna</div>
+                </a>
+            </li>
+        @endcan
 
-        <li class="menu-item {{ request()->is('admin/role', 'admin/role/*') ? ' active' : '' }}">
-            <a href="{{ route('admin.role.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bxs-user-account"></i>
-                <div data-i18n="Basic">Role</div>
-            </a>
-        </li>
+        @can('view role')
+            <li class="menu-item {{ request()->is('admin/role', 'admin/role/*') ? ' active' : '' }}">
+                <a href="{{ route('admin.role.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-user-account"></i>
+                    <div data-i18n="Basic">Role</div>
+                </a>
+            </li>
+        @endcan
 
     </ul>
 </aside>
