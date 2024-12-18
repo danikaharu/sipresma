@@ -111,7 +111,7 @@ class StudentController extends Controller
         }
     }
 
-    public function studentsWith30Points()
+    public function summaryPoint()
     {
         $students = DB::table('students')
             ->select('students.id', 'students.name', DB::raw('SUM(awards.point) as total_points'))

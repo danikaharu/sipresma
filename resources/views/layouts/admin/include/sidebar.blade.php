@@ -74,14 +74,14 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is('admin/students/with-30-points') ? ' active' : '' }}">
-            <a href="{{ route('admin.studentsWith30Points') }}" class="menu-link">
+        <li class="menu-item {{ request()->is('admin/summary-point') ? ' active' : '' }}">
+            <a href="{{ route('admin.summary.point') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-award"></i>
                 <div class="text-truncate">Rekap Poin</div>
             </a>
         </li>
 
-        <!-- Pengaturan Kegiatan -->
+        <!-- Master Data -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
 
         <li class="menu-item {{ request()->is('admin/student', 'admin/student/*') ? ' active' : '' }}">
@@ -114,6 +114,24 @@
             <a href="{{ route('admin.award.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-award"></i>
                 <div class="text-truncate">Prestasi</div>
+            </a>
+        </li>
+
+        <!-- Pengaturan Pengguna -->
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengaturan Pengguna</span></li>
+
+        </li>
+        <li class="menu-item {{ request()->is('admin/user', 'admin/user/*') ? ' active' : '' }}">
+            <a href="{{ route('admin.user.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Basic">Pengguna</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ request()->is('admin/role', 'admin/role/*') ? ' active' : '' }}">
+            <a href="{{ route('admin.role.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user-account"></i>
+                <div data-i18n="Basic">Role</div>
             </a>
         </li>
 

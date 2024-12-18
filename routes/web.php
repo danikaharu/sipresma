@@ -13,7 +13,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('dashboard', ['App\Http\Controllers\Admin\DashboardController', 'index'])->name('dashboard');
 
     Route::resource('student', App\Http\Controllers\Admin\StudentController::class);
-    Route::get('/students/with-30-points', [App\Http\Controllers\Admin\StudentController::class, 'studentsWith30Points'])->name('studentsWith30Points');
+    Route::get('/summary-point', [App\Http\Controllers\Admin\StudentController::class, 'summaryPoint'])->name('summary.point');
     Route::get('/generate-certificate/{studentId}', [App\Http\Controllers\Admin\StudentController::class, 'generateCertificate'])->name('generate.certificate');
 
 
@@ -25,4 +25,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('activity', App\Http\Controllers\Admin\ActivityController::class);
     Route::get('/get-activity-details', [App\Http\Controllers\Admin\ActivityController::class, 'getActivityDetails']);
     Route::put('/activity/{activity}/status/{status}', [App\Http\Controllers\Admin\ActivityController::class, 'updateStatus'])->name('activity.updateStatus');
+
+    // User
+    Route::resource('user', App\Http\Controllers\Admin\UserController::class);
+
+    // Role
+    Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
 });
