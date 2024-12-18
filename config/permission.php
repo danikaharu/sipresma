@@ -258,6 +258,7 @@ return [
                 'edit activity',
                 'delete activity',
                 'export activity',
+                'verify activity',
             ]
         ],
     ]
