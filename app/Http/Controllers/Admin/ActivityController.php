@@ -10,6 +10,7 @@ use App\Models\ActivityCategory;
 use App\Models\ActivityType;
 use App\Models\Award;
 use App\Models\Level;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -232,5 +233,21 @@ class ActivityController extends Controller implements HasMiddleware
 
         return redirect()->route('admin.activity.show', $activity->id)
             ->with('status', 'Data berhasil divalidasi');
+    }
+
+    public function export(Request $request)
+    {
+        $activities = Activity::with('award', 'student')
+            ->latest()
+            ->get();
+
+        $pdf = Pdf::loadView('admin.activity.export', compact('activities'))
+            ->setPaper('A4', 'portrait');
+
+        if ($activities) {
+            return $pdf->stream('DAFTAR KEGIATAN MAHASISWA.pdf');
+        } else {
+            return redirect()->back()->with('toast_error', 'Maaf, tidak bisa export data');
+        }
     }
 }

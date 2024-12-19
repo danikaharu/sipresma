@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('activity', App\Http\Controllers\Admin\ActivityController::class);
     Route::get('/get-activity-details', [App\Http\Controllers\Admin\ActivityController::class, 'getActivityDetails']);
     Route::put('/activity/{activity}/status/{status}', [App\Http\Controllers\Admin\ActivityController::class, 'updateStatus'])->name('activity.updateStatus');
+    Route::get('/activities/export', [App\Http\Controllers\Admin\ActivityController::class, 'export'])->name('activity.export');
 
     // User
     Route::resource('user', App\Http\Controllers\Admin\UserController::class);

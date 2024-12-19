@@ -36,6 +36,14 @@
                     </div>
                 @endcan
 
+                @can('export activity')
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{{ route('admin.activity.export') }}"><i
+                                class="bx bxs-printer me-1"></i>Cetak
+                            Data</a>
+                    </div>
+                @endcan
+
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table" id="listData">
