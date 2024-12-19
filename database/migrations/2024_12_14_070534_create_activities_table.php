@@ -17,10 +17,13 @@ return new class extends Migration
             $table->foreignId('activity_category_id')->constrained('activity_categories');
             $table->foreignId('level_id')->constrained('levels');
             $table->foreignId('award_id')->constrained('awards');
+            $table->tinyInteger('award_type');
             $table->string('name');
             $table->string('place');
             $table->date('date');
+            $table->text('photo');
             $table->text('file');
+            $table->text('description');
             $table->tinyInteger('status');
             $table->timestamps();
         });
