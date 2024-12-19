@@ -12,7 +12,7 @@ class ActivityCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('activity_categoryies')->insert([
+        DB::table('activity_categories')->insert([
             [
                 'name' => 'Prestasi',
                 'created_at' => now(),
