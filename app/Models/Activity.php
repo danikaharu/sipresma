@@ -10,7 +10,7 @@ class Activity extends Model
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
     use HasFactory;
 
-    protected $fillable = ['student_id', 'activity_category_id', 'level_id', 'award_id', 'award_type', 'name', 'place', 'date', 'photo', 'file', 'description', 'status'];
+    protected $fillable = ['student_id', 'activity_category_id', 'level_id', 'award_id', 'award_type', 'name', 'place', 'start_date', 'end_date', 'photo', 'file', 'description', 'status'];
 
     public function student()
     {

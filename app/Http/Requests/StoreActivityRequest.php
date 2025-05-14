@@ -17,7 +17,6 @@ class StoreActivityRequest extends FormRequest
     public function prepareForValidation()
     {
         return $this->merge([
-            'student_id' => 1,
             'status' => 0
         ]);
     }
@@ -30,14 +29,15 @@ class StoreActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'student_id' => ['exists:students,id'],
+            'student_id' => ['required', 'exists:students,id'],
             'activity_category_id' => ['required', 'exists:activity_categories,id'],
             'level_id' => ['required', 'exists:levels,id'],
             'award_id' => ['required', 'exists:awards,id'],
             'award_type' => ['required', 'in:1,2'],
             'name' => ['required', 'string', 'max:255'],
             'place' => ['required', 'string', 'max:255'],
-            'date' => ['required', 'date'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
             'photo' => ['required', 'mimes:jpg,jpeg,png', 'max:5000'],
             'file' => ['required', 'mimes:pdf', 'max:5000'],
             'description' => ['required'],
@@ -61,8 +61,10 @@ class StoreActivityRequest extends FormRequest
             'name.max' => 'Nama Kegiatan maksimal 255 kata',
             'place.required' => 'Tempat Kegiatan wajib diisi',
             'place.max' => 'Tempat Kegiatan maksimal 255 kata',
-            'date.required' => 'Tanggal Kegiatan wajib diisi',
-            'date.date' => 'Tanggal Kegiatan tidak sesuai format',
+            'start_date.required' => 'Tanggal Mulai wajib diisi',
+            'start_date.date' => 'Tanggal Mulai tidak sesuai format',
+            'end_date.required' => 'Tanggal Selesai wajib diisi',
+            'end_date.date' => 'Tanggal Selesai tidak sesuai format',
             'photo.required' => 'Foto Kegiatan wajib upload',
             'photo.mimes' => 'Foto Kegiatan tidak sesuai format',
             'photo.max' => 'Foto Kegiatan maksimal 5 MB',

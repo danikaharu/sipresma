@@ -1,5 +1,23 @@
 <div class="row">
     <div class="col-md-6 mb-6">
+        <label class="form-label" for="basic-default-fullname">Mahasiswa</label>
+        <select name="student_id" class="form-select @error('student_id')
+       invalid
+   @enderror">
+            <option disabled selected>-- Pilih Mahasiswa --</option>
+            @foreach ($students as $student)
+                <option value="{{ $student->id }}"
+                    {{ isset($activity) && $activity->student_id == $student->id ? 'selected' : (old('student_id') == $student->id ? 'selected' : '') }}>
+                    {{ $student->name }}</option>
+            @endforeach
+        </select>
+        @error('student_id')
+            <div class="small text-danger">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+    <div class="col-md-6 mb-6">
         <label class="form-label" for="basic-default-fullname">Nama Kegiatan</label>
         <input type="text" name="name" class="form-control @error('name')
       invalid
@@ -46,12 +64,24 @@
     </div>
 
     <div class="col-md-6 mb-6">
-        <label class="form-label" for="basic-default-fullname">Tanggal Pelaksanaan</label>
-        <input type="date" name="date" class="form-control @error('date')
+        <label class="form-label" for="basic-default-fullname">Tanggal Mulai</label>
+        <input type="date" name="start_date" class="form-control @error('start_date')
       invalid
   @enderror"
-            value="{{ isset($activity) ? $activity->date : old('date') }}">
-        @error('date')
+            value="{{ isset($activity) ? $activity->start_date : old('start_date') }}">
+        @error('start_date')
+            <div class="small text-danger">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+    <div class="col-md-6 mb-6">
+        <label class="form-label" for="basic-default-fullname">Tanggal Selesai</label>
+        <input type="date" name="end_date" class="form-control @error('end_date')
+      invalid
+  @enderror"
+            value="{{ isset($activity) ? $activity->end_date : old('end_date') }}">
+        @error('end_date')
             <div class="small text-danger">
                 {{ $message }}
             </div>

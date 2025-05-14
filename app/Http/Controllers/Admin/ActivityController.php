@@ -10,6 +10,7 @@ use App\Models\ActivityCategory;
 use App\Models\ActivityType;
 use App\Models\Award;
 use App\Models\Level;
+use App\Models\Student;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -71,7 +72,8 @@ class ActivityController extends Controller implements HasMiddleware
     {
         $categories = ActivityCategory::all();
         $levels = Level::all();
-        return view('admin.activity.create', compact('categories', 'levels'));
+        $students = Student::all();
+        return view('admin.activity.create', compact('categories', 'levels', 'students'));
     }
 
     /**
@@ -122,7 +124,8 @@ class ActivityController extends Controller implements HasMiddleware
     {
         $categories = ActivityCategory::all();
         $levels = Level::all();
-        return view('admin.activity.edit', compact('activity', 'categories', 'levels'));
+        $students = Student::all();
+        return view('admin.activity.edit', compact('activity', 'categories', 'levels', 'students'));
     }
 
     /**

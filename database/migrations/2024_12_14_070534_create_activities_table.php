@@ -20,7 +20,8 @@ return new class extends Migration
             $table->tinyInteger('award_type');
             $table->string('name');
             $table->string('place');
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->text('photo');
             $table->text('file');
             $table->text('description');
