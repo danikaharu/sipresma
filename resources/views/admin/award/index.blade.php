@@ -1,6 +1,6 @@
 @extends('layouts.admin.index')
 
-@section('title', 'Penghargaan')
+@section('title', 'Poin')
 
 @push('style')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
@@ -25,13 +25,13 @@
         <!-- Responsive Table -->
         <div class="card">
             <div class="card-header">
-                <h5>Data Penghargaan</h5>
+                <h5>Data Poin</h5>
 
                 @can('create award')
                     <div class="btn-group">
                         <a class="btn btn-primary" href="{{ route('admin.award.create') }}"><i class="bx bx-plus me-1"></i>Input
                             Data
-                            Penghargaan</a>
+                            Poin</a>
                     </div>
                 @endcan
 

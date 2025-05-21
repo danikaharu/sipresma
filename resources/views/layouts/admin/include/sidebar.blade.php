@@ -71,7 +71,7 @@
             <li class="menu-item {{ request()->is('admin/activity', 'admin/activity/*') ? ' active' : '' }}">
                 <a href="{{ route('admin.activity.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-category"></i>
-                    <div class="text-truncate">Kegiatan</div>
+                    <div class="text-truncate">Prestasi</div>
                 </a>
             </li>
         @endcan
@@ -129,7 +129,7 @@
             <li class="menu-item {{ request()->is('admin/award', 'admin/award/*') ? ' active' : '' }}">
                 <a href="{{ route('admin.award.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-award"></i>
-                    <div class="text-truncate">Prestasi</div>
+                    <div class="text-truncate">Poin</div>
                 </a>
             </li>
         @endcan

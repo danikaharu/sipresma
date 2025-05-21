@@ -43,8 +43,14 @@ class ActivityController extends Controller implements HasMiddleware
             $activities = Activity::with('award', 'student', 'category', 'level')->latest()->get();
             return DataTables::of($activities)
                 ->addIndexColumn()
-                ->addColumn('student', function ($row) {
+                ->addColumn('student_number', function ($row) {
+                    return  $row->student->student_number ?? '-';
+                })
+                ->addColumn('student_name', function ($row) {
                     return  $row->student->name ?? '-';
+                })
+                ->addColumn('student_enrollment', function ($row) {
+                    return  $row->student->enrollment_year ?? '-';
                 })
                 ->addColumn('category', function ($row) {
                     return  $row->category->name ?? '-';
@@ -52,8 +58,8 @@ class ActivityController extends Controller implements HasMiddleware
                 ->addColumn('level', function ($row) {
                     return  $row->level->name ?? '-';
                 })
-                ->addColumn('point', function ($row) {
-                    return  $row->award->point ?? '-';
+                ->addColumn('award_type', function ($row) {
+                    return  $row->award_type() ?? '-';
                 })
                 ->addColumn('status', function ($row) {
                     return  $row->status() ?? '-';

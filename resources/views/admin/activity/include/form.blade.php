@@ -8,7 +8,7 @@
             @foreach ($students as $student)
                 <option value="{{ $student->id }}"
                     {{ isset($activity) && $activity->student_id == $student->id ? 'selected' : (old('student_id') == $student->id ? 'selected' : '') }}>
-                    {{ $student->name }}</option>
+                    {{ $student->student_number }} - {{ $student->name }}</option>
             @endforeach
         </select>
         @error('student_id')

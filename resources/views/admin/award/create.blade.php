@@ -1,6 +1,6 @@
 @extends('layouts.admin.index')
 
-@section('title', 'Tambah Penghargaan')
+@section('title', 'Tambah Poin')
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -11,7 +11,7 @@
                     @csrf
                     <div class="card mb-6">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Tambah Data Penghargaan</h5>
+                            <h5 class="mb-0">Tambah Data Poin</h5>
                         </div>
                         <div class="card-body">
                             @include('admin.award.include.form')

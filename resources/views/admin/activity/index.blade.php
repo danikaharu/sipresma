@@ -50,10 +50,12 @@
                     <thead>
                         <tr class="text-nowrap">
                             <th>No.</th>
-                            <th>Mahasiswa</th>
-                            <th>Kategori Kegiatan</th>
-                            <th>Tingkat Kegiatan</th>
-                            <th>Poin</th>
+                            <th>NIM</th>
+                            <th>Nama</th>
+                            <th>Angkatan</th>
+                            <th>Kategori</th>
+                            <th>Tingkat</th>
+                            <th>Jenis</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -89,7 +91,13 @@
                 columns: [{
                         data: 'DT_RowIndex',
                     }, {
-                        data: 'student',
+                        data: 'student_number',
+                    },
+                    {
+                        data: 'student_name',
+                    },
+                    {
+                        data: 'student_enrollment',
                     }, {
                         data: 'category',
                     },
@@ -97,7 +105,7 @@
                         data: 'level',
                     },
                     {
-                        data: 'point',
+                        data: 'award_type',
                     },
                     {
                         data: 'status',
