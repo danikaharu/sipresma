@@ -39,36 +39,60 @@ class ActivityController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        if (request()->ajax()) {
-            $activities = Activity::with('award', 'student', 'category', 'level')->latest()->get();
-            return DataTables::of($activities)
-                ->addIndexColumn()
-                ->addColumn('student_number', function ($row) {
-                    return  $row->student->student_number ?? '-';
-                })
-                ->addColumn('student_name', function ($row) {
-                    return  $row->student->name ?? '-';
-                })
-                ->addColumn('student_enrollment', function ($row) {
-                    return  $row->student->enrollment_year ?? '-';
-                })
-                ->addColumn('category', function ($row) {
-                    return  $row->category->name ?? '-';
-                })
-                ->addColumn('level', function ($row) {
-                    return  $row->level->name ?? '-';
-                })
-                ->addColumn('award_type', function ($row) {
-                    return  $row->award_type() ?? '-';
-                })
-                ->addColumn('status', function ($row) {
-                    return  $row->status() ?? '-';
-                })
-                ->addColumn('action', 'admin.activity.include.action')
-                ->rawColumns(['action'])
-                ->make(true);
+        $activityCategories = ActivityCategory::latest()->get();
+        $activityTypes = ActivityType::latest()->get();
+        $levels = Level::latest()->get();
+        return view('admin.activity.index', compact('activityCategories', 'activityTypes', 'levels'));
+    }
+
+    public function getStudent()
+    {
+        $activityQuery = Activity::query();
+
+        if (!empty(request()->filter_category)) {
+            $activityQuery->where('activity_category_id', request()->filter_category);
         }
-        return view('admin.activity.index');
+        if (!empty(request()->filter_level)) {
+            $activityQuery->where('level_id', request()->filter_level);
+        }
+        if (!empty(request()->filter_year)) {
+            $activityQuery->whereYear('date', request()->filter_year);
+        }
+        if (!empty(request()->filter_enrollment)) {
+            $searchString = request()->filter_enrollment;
+            $activityQuery->whereHas('student', function ($query) use ($searchString) {
+                $query->where('enrollment_year', 'like', '%' . $searchString . '%');
+            });
+        }
+
+        $activties = $activityQuery->with('award', 'student', 'category', 'level')->latest()->get();
+
+        return dataTables()->of($activties)
+            ->addIndexColumn()
+            ->addColumn('student_number', function ($row) {
+                return  $row->student->student_number ?? '-';
+            })
+            ->addColumn('student_name', function ($row) {
+                return  $row->student->name ?? '-';
+            })
+            ->addColumn('student_enrollment', function ($row) {
+                return  $row->student->enrollment_year ?? '-';
+            })
+            ->addColumn('category', function ($row) {
+                return  $row->category->name ?? '-';
+            })
+            ->addColumn('level', function ($row) {
+                return  $row->level->name ?? '-';
+            })
+            ->addColumn('award_type', function ($row) {
+                return  $row->award_type() ?? '-';
+            })
+            ->addColumn('status', function ($row) {
+                return  $row->status() ?? '-';
+            })
+            ->addColumn('action', 'admin.activity.include.action')
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -246,17 +270,43 @@ class ActivityController extends Controller implements HasMiddleware
 
     public function export(Request $request)
     {
-        $activities = Activity::with('award', 'student')
-            ->latest()
-            ->get();
+        $activityQuery = Activity::query();
+
+        // Terapkan filter jika ada
+        if (!empty($request->filter_category)) {
+            $activityQuery->where('activity_category_id', $request->filter_category);
+        }
+
+        if (!empty($request->filter_level)) {
+            $activityQuery->where('level_id', $request->filter_level);
+        }
+
+        if (!empty($request->filter_type)) {
+            $activityQuery->where('award_type', $request->filter_type); // pastikan nama kolom benar
+        }
+
+        if (!empty($request->filter_year)) {
+            $activityQuery->whereYear('date', $request->filter_year);
+        }
+
+        if (!empty($request->filter_enrollment)) {
+            $searchString = $request->filter_enrollment;
+            $activityQuery->whereHas('student', function ($query) use ($searchString) {
+                $query->where('enrollment_year', 'like', '%' . $searchString . '%');
+            });
+        }
+
+        // Ambil data lengkap beserta relasi
+        $activities = $activityQuery->with('award', 'student', 'category', 'level')->latest()->get();
+
+        // Cek jika tidak ada data
+        if ($activities->isEmpty()) {
+            return redirect()->back()->with('error', 'Maaf, tidak ada data yang sesuai filter untuk diekspor.');
+        }
 
         $pdf = Pdf::loadView('admin.activity.export', compact('activities'))
             ->setPaper('A4', 'portrait');
 
-        if ($activities) {
-            return $pdf->stream('DAFTAR KEGIATAN MAHASISWA.pdf');
-        } else {
-            return redirect()->back()->with('toast_error', 'Maaf, tidak bisa export data');
-        }
+        return $pdf->stream('DAFTAR KEGIATAN MAHASISWA.pdf');
     }
 }

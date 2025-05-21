@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('award', App\Http\Controllers\Admin\AwardController::class);
 
     Route::resource('activity', App\Http\Controllers\Admin\ActivityController::class);
+    Route::get('/listStudent', [\App\Http\Controllers\Admin\ActivityController::class, 'getStudent'])->name('activity.getStudent');
     Route::get('/get-activity-details', [App\Http\Controllers\Admin\ActivityController::class, 'getActivityDetails']);
     Route::put('/activity/{activity}/status/{status}', [App\Http\Controllers\Admin\ActivityController::class, 'updateStatus'])->name('activity.updateStatus');
     Route::get('/activities/export', [App\Http\Controllers\Admin\ActivityController::class, 'export'])->name('activity.export');
