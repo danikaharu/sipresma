@@ -51,13 +51,23 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="filter_program">{{ __('Prodi') }}</label>
+                                    <select id="filter_program" class="form-select" name="filter_program">
+                                        <option disabled selected>-- Pilih Prodi --</option>
+                                        <option value="1">Sistem Informasi</option>
+                                        <option value="2">Pendidikan Teknologi Informasi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="filter_year">{{ __('Tahun Kegiatan') }}</label>
                                     <input id="filter_year" class="form-control" name="filter_year" type="text">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="filter_promotion">{{ __('Tahun Angkatan') }}</label>
+                                    <label for="filter_enrollment">{{ __('Tahun Angkatan') }}</label>
                                     <input id="filter_enrollment" class="form-control" name="filter_enrollment"
                                         type="text">
                                 </div>
@@ -87,7 +97,7 @@
                                 <form id="exportForm" method="GET" action="{{ route('admin.activity.export') }}">
                                     <input type="hidden" name="filter_category">
                                     <input type="hidden" name="filter_level">
-                                    <input type="hidden" name="filter_type">
+                                    <input type="hidden" name="filter_program">
                                     <input type="hidden" name="filter_year">
                                     <input type="hidden" name="filter_enrollment">
                                     <button type="submit" class="btn btn-primary">
@@ -151,7 +161,7 @@
                     data: function(d) {
                         d.filter_category = $('#filter_category').val();
                         d.filter_level = $('#filter_level').val();
-                        d.filter_type = $('#filter_type').val();
+                        d.filter_program = $('#filter_program').val();
                         d.filter_year = $('#filter_year').val();
                         d.filter_enrollment = $('#filter_enrollment').val();
                     }
@@ -195,7 +205,7 @@
             $('#reset').click(function() {
                 $('#filter_category').val('');
                 $('#filter_level').val('');
-                $('#filter_type').val('');
+                $('#filter_program').val('');
                 $('#filter_year').val('');
                 $('#filter_enrollment').val('');
             })
@@ -204,7 +214,7 @@
                 // Set nilai filter ke input hidden sebelum submit form
                 $(this).find('input[name="filter_category"]').val($('#filter_category').val());
                 $(this).find('input[name="filter_level"]').val($('#filter_level').val());
-                $(this).find('input[name="filter_type"]').val($('#filter_type').val());
+                $(this).find('input[name="filter_program"]').val($('#filter_program').val());
                 $(this).find('input[name="filter_year"]').val($('#filter_year').val());
                 $(this).find('input[name="filter_enrollment"]').val($('#filter_enrollment').val());
             });

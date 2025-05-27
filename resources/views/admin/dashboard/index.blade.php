@@ -2,50 +2,54 @@
 
 @section('title', 'Dashboard')
 
+
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card mb-3">
             <div class="card-header">
-                <h5>Prestasi Akademik</h5>
+                <h5>Grafik Jumlah Prestasi per Tahun</h5>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    @foreach ($acamedicCountByLevel as $activity)
-                        <div class="col-lg-4 col-sm-6 mb-2">
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="avatar me-4">
-                                    <span class="avatar-initial rounded bg-label-primary"><i
-                                            class="bx bx-notepad bx-lg"></i></span>
-                                </div>
-                                <h4 class="mb-0">{{ $activity->total ?? 0 }}</h4>
-                            </div>
-                            <p class="mb-2">{{ $activity->name }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+            <canvas id="activityChart" width="400" height="200"></canvas>
         </div>
-        <div class="card mb-3">
-            <div class="card-header">
-                <h5>Prestasi Non Akademik</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    @foreach ($nonAcamedicCountByLevel as $activity)
-                        <div class="col-lg-4 col-sm-6 mb-2">
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="avatar me-4">
-                                    <span class="avatar-initial rounded bg-label-primary"><i
-                                            class="bx bx-notepad bx-lg"></i></span>
-                                </div>
-                                <h4 class="mb-0">{{ $activity->total ?? 0 }}</h4>
-                            </div>
-                            <p class="mb-2">{{ $activity->name }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+
 
     </div>
 @endsection
+
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        fetch('/admin/activities/chart-data')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.year);
+                const values = data.map(item => item.total);
+
+                const ctx = document.getElementById('activityChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar', // bisa diganti 'line' jika ingin
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Jumlah Prestasi',
+                            data: values,
+                            backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+@endpush

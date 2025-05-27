@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 
@@ -11,6 +11,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     // Dashboard
     Route::get('dashboard', ['App\Http\Controllers\Admin\DashboardController', 'index'])->name('dashboard');
+    Route::get('/activities/chart-data', ['App\Http\Controllers\Admin\DashboardController', 'chartData']);
 
     Route::resource('student', App\Http\Controllers\Admin\StudentController::class);
     Route::get('/summary-point', [App\Http\Controllers\Admin\StudentController::class, 'summaryPoint'])->name('summary.point');

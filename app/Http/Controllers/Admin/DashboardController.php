@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Level;
 use Illuminate\Support\Facades\DB;
 
@@ -25,5 +26,15 @@ class DashboardController extends Controller
             ->get();
 
         return view('admin.dashboard.index', compact('acamedicCountByLevel', 'nonAcamedicCountByLevel'));
+    }
+
+    public function chartData()
+    {
+        $data = Activity::selectRaw('YEAR(start_date) as year, COUNT(*) as total')
+            ->groupBy('year')
+            ->orderBy('year')
+            ->get();
+
+        return response()->json($data);
     }
 }

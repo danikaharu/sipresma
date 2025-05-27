@@ -55,8 +55,15 @@ class ActivityController extends Controller implements HasMiddleware
         if (!empty(request()->filter_level)) {
             $activityQuery->where('level_id', request()->filter_level);
         }
+
+        if (!empty(request()->filter_program)) {
+            $searchString = request()->filter_program;
+            $activityQuery->whereHas('student', function ($query) use ($searchString) {
+                $query->where('program', 'like', '%' . $searchString . '%');
+            });
+        }
         if (!empty(request()->filter_year)) {
-            $activityQuery->whereYear('date', request()->filter_year);
+            $activityQuery->whereYear('start_date', request()->filter_year);
         }
         if (!empty(request()->filter_enrollment)) {
             $searchString = request()->filter_enrollment;
@@ -281,12 +288,15 @@ class ActivityController extends Controller implements HasMiddleware
             $activityQuery->where('level_id', $request->filter_level);
         }
 
-        if (!empty($request->filter_type)) {
-            $activityQuery->where('award_type', $request->filter_type); // pastikan nama kolom benar
+        if (!empty($request->filter_program)) {
+            $searchString = $request->filter_program;
+            $activityQuery->whereHas('student', function ($query) use ($searchString) {
+                $query->where('program', 'like', '%' . $searchString . '%');
+            });
         }
 
         if (!empty($request->filter_year)) {
-            $activityQuery->whereYear('date', $request->filter_year);
+            $activityQuery->whereYear('start_date', $request->filter_year);
         }
 
         if (!empty($request->filter_enrollment)) {
